@@ -467,7 +467,7 @@ export class Telegram extends ApiClient {
       chat_id: chatId,
       type: 'regular',
       question,
-      options,
+      options: options.map((text) => ({ text })),
       ...extra,
     })
   }
@@ -488,7 +488,7 @@ export class Telegram extends ApiClient {
       chat_id: chatId,
       type: 'quiz',
       question,
-      options,
+      options: options.map((text) => ({ text })),
       ...extra,
     })
   }
@@ -1318,6 +1318,7 @@ export class Telegram extends ApiClient {
     thumbnail?: tg.Opts<'setStickerSetThumbnail'>['thumbnail']
   ) {
     return this.callApi('setStickerSetThumbnail', {
+      format: 'static',
       name,
       user_id: userId,
       thumbnail,
