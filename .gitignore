@@ -46,6 +46,3 @@ tsconfig.tsbuildinfo
 
 # Linting cache
 .eslintcache
-
-/*.js
-/*.d.ts
