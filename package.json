@@ -70,6 +70,7 @@
     "telegraf": "lib/cli.mjs"
   },
   "scripts": {
+    "install": "npm run --silent build",
     "prepare": "npm run --silent build",
     "build": "tsc && npm run expose",
     "expose": "tsx build/expose.ts types scenes filters format future utils markup session",
