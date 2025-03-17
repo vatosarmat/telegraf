@@ -1538,9 +1538,11 @@ interface Msg {
 }
 
 const Msg: Msg = {
+  // @ts-expect-error foo
   isAccessible() {
     return 'date' in this && this.date !== 0
   },
+  // @ts-expect-error foo
   has(...keys) {
     return keys.some(
       (key) =>
