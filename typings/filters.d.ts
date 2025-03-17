@@ -7,6 +7,7 @@ export type AllGuarded<Fs extends Filter<Update>[]> = Fs extends [
     ...infer B
 ] ? B extends [] ? Guarded<A> : B extends Filter<Update>[] ? Guarded<A> & AllGuarded<B> : never : never;
 export declare const message: <Ks extends DistinctKeys<Message>[]>(...keys: Ks) => (update: Update) => update is Update.MessageUpdate<KeyedDistinct<Message, Ks[number]>>;
+export declare const businessMessage: <Ks extends DistinctKeys<CommonMessageBundle>[]>(...keys: Ks) => (update: Update) => update is Update.BusinessMessageUpdate<KeyedDistinct<CommonMessageBundle, Ks[number]>>;
 export declare const editedMessage: <Ks extends DistinctKeys<CommonMessageBundle>[]>(...keys: Ks) => (update: Update) => update is Update.EditedMessageUpdate<KeyedDistinct<CommonMessageBundle, Ks[number]>>;
 export declare const channelPost: <Ks extends DistinctKeys<Message>[]>(...keys: Ks) => (update: Update) => update is Update.ChannelPostUpdate<KeyedDistinct<Message, Ks[number]>>;
 export declare const editedChannelPost: <Ks extends DistinctKeys<CommonMessageBundle>[]>(...keys: Ks) => (update: Update) => update is Update.EditedChannelPostUpdate<KeyedDistinct<CommonMessageBundle, Ks[number]>>;
