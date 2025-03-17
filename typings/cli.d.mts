@@ -10,6 +10,6 @@ type Env = {
 /**
  * Runs the cli program and returns exit code
  */
-export declare function main(argv: string[], env?: Env): Promise<0 | 1 | 2 | 3>;
+export declare function main(argv: string[], env?: Env): Promise<0 | 2 | 1 | 3>;
 export {};
 //# sourceMappingURL=cli.d.mts.map

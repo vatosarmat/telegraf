@@ -70,6 +70,10 @@ export class Context<U extends Deunionize<tg.Update> = tg.Update> {
     return this.update.message as PropOr<U, 'message'>
   }
 
+  get businessMessage() {
+    return this.update.business_message as PropOr<U, 'business_message'>
+  }
+
   get editedMessage() {
     return this.update.edited_message as PropOr<U, 'edited_message'>
   }
@@ -1552,6 +1556,8 @@ export type MaybeMessage<
 
 type GetMsg<U extends tg.Update> = U extends tg.Update.MessageUpdate
   ? U['message']
+  : U extends tg.Update.BusinessMessageUpdate
+  ? U['business_message']
   : U extends tg.Update.ChannelPostUpdate
   ? U['channel_post']
   : U extends tg.Update.EditedChannelPostUpdate
@@ -1565,6 +1571,7 @@ type GetMsg<U extends tg.Update> = U extends tg.Update.MessageUpdate
 function getMessageFromAnySource<U extends tg.Update>(ctx: Context<U>) {
   const msg =
     ctx.message ??
+    ctx.businessMessage ??
     ctx.editedMessage ??
     ctx.callbackQuery?.message ??
     ctx.channelPost ??

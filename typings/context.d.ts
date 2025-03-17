@@ -30,6 +30,7 @@ export declare class Context<U extends Deunionize<tg.Update> = tg.Update> {
      */
     get tg(): Telegram;
     get message(): PropOr<U, "message">;
+    get businessMessage(): PropOr<U, "business_message">;
     get editedMessage(): PropOr<U, "edited_message">;
     get inlineQuery(): PropOr<U, "inline_query">;
     get shippingQuery(): PropOr<U, "shipping_query">;
@@ -75,7 +76,7 @@ export declare class Context<U extends Deunionize<tg.Update> = tg.Update> {
     has<Filter extends tt.UpdateType | Guard<Context['update']>>(filters: MaybeArray<Filter>): this is FilteredContext<Context, Filter>;
     get text(): GetText<U>;
     entities<EntityTypes extends tg.MessageEntity['type'][]>(...types: EntityTypes): (tg.MessageEntity & {
-        type: EntityTypes extends [] ? "url" | "phone_number" | "custom_emoji" | "bold" | "mention" | "hashtag" | "cashtag" | "bot_command" | "email" | "blockquote" | "expandable_blockquote" | "italic" | "underline" | "strikethrough" | "spoiler" | "code" | "pre" | "text_link" | "text_mention" : EntityTypes[number];
+        type: EntityTypes extends [] ? "bold" | "mention" | "hashtag" | "cashtag" | "bot_command" | "url" | "email" | "phone_number" | "blockquote" | "expandable_blockquote" | "italic" | "underline" | "strikethrough" | "spoiler" | "code" | "pre" | "text_link" | "text_mention" | "custom_emoji" : EntityTypes[number];
         fragment: string;
     })[];
     /**
@@ -167,7 +168,7 @@ export declare class Context<U extends Deunionize<tg.Update> = tg.Update> {
         user_id: number;
         until_date?: number | undefined;
         revoke_messages?: boolean | undefined;
-    }, "user_id" | "chat_id" | "until_date"> | undefined) => Promise<true>;
+    }, "chat_id" | "user_id" | "until_date"> | undefined) => Promise<true>;
     /**
      * @see https://core.telegram.org/bots/api#unbanchatmember
      */
@@ -644,7 +645,7 @@ interface Msg {
 }
 declare const Msg: Msg;
 export type MaybeMessage<M extends tg.MaybeInaccessibleMessage = tg.MaybeInaccessibleMessage> = M & Msg;
-type GetMsg<U extends tg.Update> = U extends tg.Update.MessageUpdate ? U['message'] : U extends tg.Update.ChannelPostUpdate ? U['channel_post'] : U extends tg.Update.EditedChannelPostUpdate ? U['edited_channel_post'] : U extends tg.Update.EditedMessageUpdate ? U['edited_message'] : U extends tg.Update.CallbackQueryUpdate ? U['callback_query']['message'] : undefined;
+type GetMsg<U extends tg.Update> = U extends tg.Update.MessageUpdate ? U['message'] : U extends tg.Update.BusinessMessageUpdate ? U['business_message'] : U extends tg.Update.ChannelPostUpdate ? U['channel_post'] : U extends tg.Update.EditedChannelPostUpdate ? U['edited_channel_post'] : U extends tg.Update.EditedMessageUpdate ? U['edited_message'] : U extends tg.Update.CallbackQueryUpdate ? U['callback_query']['message'] : undefined;
 type GetUserFromAnySource<U extends tg.Update> = GetMsg<U> extends {
     from: tg.User;
 } ? tg.User : U extends tg.Update.CallbackQueryUpdate | tg.Update.InlineQueryUpdate | tg.Update.ShippingQueryUpdate | tg.Update.PreCheckoutQueryUpdate | tg.Update.ChosenInlineResultUpdate | tg.Update.ChatMemberUpdate | tg.Update.MyChatMemberUpdate | tg.Update.ChatJoinRequestUpdate | tg.Update.MessageReactionUpdate | tg.Update.PollAnswerUpdate | tg.Update.ChatBoostUpdate ? tg.User : undefined;
